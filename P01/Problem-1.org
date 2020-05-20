@@ -1,0 +1,65 @@
+#+TITLE: Problem 1
+"Find the last box of a list."
+
+This is the most trivial problem. In C terms, "go until you hit a
+null terminator." In a functional language, this can be done
+recursively.
+* Recursive
+#+BEGIN_SRC c
+char long_recursive_mylast(char * list) {
+  if (!list[1])
+    return *list;
+  return long_recursive_mylast(list + 1);
+}
+#+END_SRC
+The condition ~!list[1]~ is a clever syntax for ~list[1] == NULL~. In
+other words, "is the next element null?" If it is, you return the
+current element. If it isn't, you simply call the function with
+pointer pointing at the next element.
+
+You can shorten the syntax with simpler logic, and a ternary operator.
+#+BEGIN_SRC c
+char short_recursive_mylast(char * list) {
+  return list[1] ? short_recursive_mylast(list + 1) : *list;
+}
+#+END_SRC
+This reads "Is the next element there? if it is, keep going, and if it
+isn't you're done."
+* Imperative
+The two previous functions were pure functions: there was no
+mutation. In normal C (the real world), we use mutations and while
+loops.
+#+BEGIN_SRC c
+char imperative_mylast(char * list) {
+  while (*++list);
+  return *--list;
+}
+#+END_SRC
+This is a typical C program. It reads "increment the pointer; is it
+null? Quit if it is. Now, decrement and return. You could also return
+the previous element, without modifying the pointer. Note that it
+wouldn't matter, because the local pointer wouldn't exist after
+returning.
+
+Now, we can write a test macro
+#+BEGIN_SRC c
+#define CHECK(func, test_str, result)		\
+  printf("TEST: %s\n", (func(test_str) == result) ? "pass" : "fail")
+#+END_SRC
+This prints "pass" if the test passes, and "fail" otherwise. We can
+use it in our ~main~ like the following:
+#+BEGIN_SRC c
+int main() {
+  CHECK(long_recursive_mylast, "abcd", 'd');
+  CHECK(short_recursive_mylast, "abcd", 'd');
+  CHECK(imperative_mylast, "abcd", 'd');
+}
+#+END_SRC
+* Compiling
+I included a ~Makefile~ for the problems to help with compiling. If
+you are on a unix system, you probably already have ~make~. You can
+compile and run with
+#+BEGIN_SRC bash
+make run
+#+END_SRC
+

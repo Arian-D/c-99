@@ -1,0 +1,35 @@
+#+TITLE: Introduction
+#+AUTHOR: Arian D.
+
+This, perhaps, is a very stupid idea, but I thought that I would try
+the [[https://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html][99 Lisp Problems]] with C. It originated with Prolog, but
+continued to come to Lisp and [[https://wiki.haskell.org/H-99:_Ninety-Nine_Haskell_Problems][Haskell]]. These are all high level
+languages, and provide many features that make the work easier such as
+garbage collection, tail recursion optimization, and pattern
+matching. C has no memory safety, clever recursion scheme (in most
+common compilers), and no fancy syntactic sugars. This makes the job a
+little bit harder, but representing these concepts in a language like
+C is (might be?) interesting.
+
+I, personally, learned most of what I know about C from the book [[https://archive.org/details/cprogramminglang00denn/page/n7/mode/2up][The C
+progrmming language]]. Even after wandering in the worlds of OOP, logic,
+and functional languages, I feel that it is one of the most important
+programming books of all time. It also provides some fun exercises that
+strengthen your C skills.
+
+Many of the 99 problems are concerning lists. It is possible to
+construct linked lists in C, but a more interesting approach is to
+think of pointers as lists. A list is simply a bunch of elements. It
+is _not_ indexed in constant time and the length is not known, unlike
+vectors and arrays. This fits the definition of pointers, and I
+thought it would be fun to explore the idea.
+* Modifications
+** Generics
+Unlike C++ or Haskell, C does not have generics, which means our types
+have to be specific. I will use ~char~ for most of them, but a more
+unsafe approach is to use a ~void~ pointer.
+** Loose types
+Unlike Lisp and Prolog, C is statically typed, meaning we can't have
+differnt types in a single list. I'll only add elements that /can/ be
+there and for nested lists I'll try to not go more in depth than
+two.
